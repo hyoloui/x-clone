@@ -26,8 +26,7 @@ export default function PhotoModal() {
         />
         <div className={style.buttonZone}>
           <div className={style.buttonInner}>
-            {/* <ActionButtons white /> */}
-            <ActionButtons />
+            <ActionButtons white />
           </div>
         </div>
       </div>
