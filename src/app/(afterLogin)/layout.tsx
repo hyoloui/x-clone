@@ -7,8 +7,8 @@ import LogoutButton from "@/app/(afterLogin)/_component/LogoutButton";
 import TrendSection from "@/app/(afterLogin)/_component/TrendSection";
 import FollowRecommend from "@/app/(afterLogin)/_component/FollowRecommend";
 
-type Props = { children: React.ReactNode };
-export default function AfterLoginLayout({ children }: Props) {
+type Props = { children: React.ReactNode; modal: React.ReactNode };
+export default function AfterLoginLayout({ children, modal }: Props) {
   return (
     <div className={style.container}>
       <header className={style.leftSectionWrapper}>
@@ -55,6 +55,7 @@ export default function AfterLoginLayout({ children }: Props) {
           </section>
         </div>
       </div>
+      {modal}
     </div>
   );
 }

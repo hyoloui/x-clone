@@ -4,7 +4,7 @@ import TabProvider from "@/app/(afterLogin)/home/_component/TabProvider";
 import PostForm from "@/app/(afterLogin)/home/_component/PostForm";
 import Post from "@/app/(afterLogin)/_component/Post";
 
-export default function HomePage() {
+export default function Home() {
   const postList: number[] = Array.from({ length: 20 }, (_, i) => i);
   return (
     <main className={styles.main}>
