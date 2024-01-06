@@ -32,8 +32,7 @@ export default function PhotoModal() {
         </div>
       </div>
       <div className={style.commentZone}>
-        {/* <Post noImage /> */}
-        <Post />
+        <Post noImage />
         <CommentForm />
         <Post />
         <Post />
