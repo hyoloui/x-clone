@@ -1,8 +1,11 @@
 import style from "./post.module.css";
+
 import Link from "next/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
+import { faker } from "@faker-js/faker";
+
 import ActionButtons from "@/app/(afterLogin)/_component/ActionButtons";
 import PostArticle from "./PostArticle";
 
@@ -21,6 +24,10 @@ export default function Post() {
     createdAt: new Date(),
     Images: [] as any[],
   };
+
+  if (Math.random() > 0.5) {
+    target.Images.push({ imageId: 1, link: faker.image.urlLoremFlickr() });
+  }
 
   return (
     <PostArticle post={target}>
@@ -44,7 +51,20 @@ export default function Post() {
             </span>
           </div>
           <div>{target.content}</div>
-          <div className={style.postImageSection}></div>
+          <div className={style.postImageSection}>
+            {target.Images && target.Images.length > 0 && (
+              <Link
+                href={`/${target.User.id}/status/${target.postId}/photo/${target.Images[0].imageId}`}
+                // className={cx(style.postImageSection, style.oneImage)}
+                // style={{
+                //   backgroundImage: `url(${post.Images[0]?.link})`,
+                //   backgroundSize: "contain",
+                // }}
+              >
+                <img src={target.Images[0]?.link} alt="" />
+              </Link>
+            )}
+          </div>
           <ActionButtons />
         </div>
       </div>
