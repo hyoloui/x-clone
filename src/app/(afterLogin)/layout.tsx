@@ -4,8 +4,8 @@ import Image from "next/image";
 import ZLogo from "@/../public/zlogo.png";
 import NavMenu from "@/app/(afterLogin)/_component/NavMenu";
 import LogoutButton from "@/app/(afterLogin)/_component/LogoutButton";
-// import TrendSection from "@/app/(afterLogin)/_component/TrendSection";
-// import FollowRecommend from "@/app/(afterLogin)/_component/FollowRecommend";
+import TrendSection from "@/app/(afterLogin)/_component/TrendSection";
+import FollowRecommend from "@/app/(afterLogin)/_component/FollowRecommend";
 
 type Props = { children: React.ReactNode };
 export default function AfterLoginLayout({ children }: Props) {
@@ -45,12 +45,12 @@ export default function AfterLoginLayout({ children }: Props) {
                 <input type="search" />
               </form>
             </div>
-            {/* <TrendSection /> */}
+            <TrendSection />
             <div className={style.followRecommend}>
               <h3>팔로우 추천</h3>
-              {/* <FollowRecommend />
               <FollowRecommend />
-              <FollowRecommend /> */}
+              <FollowRecommend />
+              <FollowRecommend />
             </div>
           </section>
         </div>
