@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import style from "./page.module.css";
+import style from "./login.module.css";
 
-export default function ModalPage() {
+export default function LoginModal() {
   const [id, setId] = useState();
   const [password, setPassword] = useState();
   const [message, setMessage] = useState();
