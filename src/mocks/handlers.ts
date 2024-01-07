@@ -24,7 +24,7 @@ export const handlers = [
   http.post("/api/login", () => {
     // POST: 로그인
     console.log("로그인");
-    return HttpResponse.json(User[1], {
+    return HttpResponse.json(User[0], {
       headers: {
         "Set-Cookie": "connect.sid=msw-cookie;HttpOnly;Path/",
       },
