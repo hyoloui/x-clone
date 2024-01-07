@@ -1,56 +1,32 @@
+"use client";
+
 import style from "./signup.module.css";
 import BackButton from "./BackButton";
-import { redirect } from "next/navigation";
+import { onSubmit } from "../_lib/signup";
+import { useFormState, useFormStatus } from "react-dom";
+
+function showKoreanMessage(message: string) {
+  if (message === "no_id") {
+    return "아이디를 입력해주세요.";
+  }
+  if (message === "no_name") {
+    return "닉네임을 입력해주세요.";
+  }
+  if (message === "no_password") {
+    return "비밀번호를 입력해주세요.";
+  }
+  if (message === "no_image") {
+    return "프로필 사진을 선택해주세요.";
+  }
+  return "";
+}
 
 export default function SignupModal() {
-  const submit = async (formData: FormData) => {
-    "use server";
+  const [state, formAction] = useFormState(onSubmit, {
+    message: "",
+  });
 
-    let shouldRedirect: boolean = false;
-
-    if (!formData.get("id")) {
-      return { message: "아이디를 입력해 주세요." };
-    }
-    if (!formData.get("name")) {
-      return { message: "이름을 입력해 주세요." };
-    }
-    if (!formData.get("password")) {
-      return { message: "비밀번호를 입력해 주세요." };
-    }
-    if (!formData.get("image")) {
-      return { message: "이미지를 선택해 주세요." };
-    }
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/users`,
-        {
-          method: "post",
-          body: formData,
-          credentials: "include",
-        }
-      );
-      console.log(response.status);
-
-      if (response.status === 403) {
-        return { message: "id is already taken" };
-      }
-
-      console.log(await response.json());
-      shouldRedirect = true;
-      // cookies 활용해 browser cookie에 sid 저장
-      // const sid = response.headers.get("Set-Cookie");
-      // if (sid) {
-      //   cookies().set("sid", sid);
-      // }
-    } catch (error) {
-      console.error(error);
-    }
-
-    if (shouldRedirect) {
-      redirect("/home");
-    }
-  };
-
+  const { pending } = useFormStatus();
   return (
     <>
       <div className={style.modalBackground}>
@@ -59,7 +35,7 @@ export default function SignupModal() {
             <BackButton />
             <div>계정을 생성하세요.</div>
           </div>
-          <form action={submit}>
+          <form action={formAction}>
             <div className={style.modalBody}>
               <div className={style.inputDiv}>
                 <label className={style.inputLabel} htmlFor="id">
@@ -115,7 +91,12 @@ export default function SignupModal() {
               </div>
             </div>
             <div className={style.modalFooter}>
-              <button className={style.actionButton}>가입하기</button>
+              <button className={style.actionButton} disabled={pending}>
+                가입하기
+              </button>
+              <div className={style.error}>
+                {state && showKoreanMessage(state.message)}
+              </div>
             </div>
           </form>
         </div>
