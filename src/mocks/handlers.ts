@@ -304,4 +304,17 @@ export const handlers = [
       { tagId: 9, title: "산적", count: 1264 },
     ]);
   }),
+  http.post("/api/users", async ({ request }) => {
+    // POST: 회원가입
+    console.log("회원가입");
+
+    // return HttpResponse.text(JSON.stringify("user_exists"), {
+    //   status: 403,
+    // });
+    return HttpResponse.text(JSON.stringify("ok"), {
+      headers: {
+        "Set-Cookie": "connect.sid=msw-cookie;HttpOnly;Path/",
+      },
+    });
+  }),
 ];
