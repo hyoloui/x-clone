@@ -1,7 +1,7 @@
 export async function getTrends() {
   const res = await fetch(`http://localhost:9090/api/trends`, {
     next: {
-      tags: ["posts", "followings"],
+      tags: ["trends"],
     },
     cache: "no-store",
   });
