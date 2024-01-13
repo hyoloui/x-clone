@@ -8,14 +8,14 @@ import {
   QueryClient,
   dehydrate,
 } from "@tanstack/react-query";
-import { getPostsRecommends } from "./_lib/getPostRecommends";
+import { getPostRecommends } from "./_lib/getPostRecommends";
 import PostRecommends from "./_component/PostRecommends";
 
 export default async function Home() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["posts", "recommends"],
-    queryFn: getPostsRecommends,
+    queryFn: getPostRecommends,
   });
   const dehydratedState = dehydrate(queryClient);
   return (

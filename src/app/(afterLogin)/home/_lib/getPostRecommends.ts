@@ -1,4 +1,4 @@
-export async function getPostsRecommends(): Promise<Post[]> {
+export async function getPostRecommends(): Promise<Post[]> {
   const response = await fetch("http://localhost:9090/api/postRecommends", {
     next: {
       tags: ["posts", "recommends"],
