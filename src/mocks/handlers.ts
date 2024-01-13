@@ -225,7 +225,10 @@ export const handlers = [
     if (found) {
       return HttpResponse.json(found);
     }
-    return HttpResponse.json({ message: "no_such_user" }, { status: 404 });
+    return HttpResponse.json(
+      { message: "그런 사람 없어유.." },
+      { status: 404 }
+    );
   }),
   http.get("/api/posts/:postId", ({ request, params }): StrictResponse<any> => {
     // GET: 특정 게시글 정보
