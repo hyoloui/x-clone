@@ -1,15 +1,15 @@
 import style from "@/app/(afterLogin)/layout.module.css";
+import { auth } from "@/auth";
 import Link from "next/link";
 import Image from "next/image";
 import ZLogo from "@/../public/zlogo.png";
+import RQProvider from "@/app/(afterLogin)/_component/RQProvider";
 
 import NavMenu from "@/app/(afterLogin)/_component/NavMenu";
 import LogoutButton from "@/app/(afterLogin)/_component/LogoutButton";
 import RightSearchZone from "@/app/(afterLogin)/_component/RightSearchZone";
 import TrendSection from "@/app/(afterLogin)/_component/TrendSection";
-import FollowRecommend from "@/app/(afterLogin)/_component/FollowRecommend";
-import { auth } from "@/auth";
-import RQProvider from "./_component/RQProvider";
+import FollowRecommendSection from "./_component/FollowRecommendSection";
 
 type Props = { children: React.ReactNode; modal: React.ReactNode };
 export default async function AfterLoginLayout({ children, modal }: Props) {
@@ -59,9 +59,7 @@ export default async function AfterLoginLayout({ children, modal }: Props) {
               <TrendSection />
               <div className={style.followRecommend}>
                 <h3>팔로우 추천</h3>
-                <FollowRecommend />
-                <FollowRecommend />
-                <FollowRecommend />
+                <FollowRecommendSection />
               </div>
             </section>
           </div>

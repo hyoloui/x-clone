@@ -3,20 +3,15 @@
 import style from "./followRecommend.module.css";
 import Image from "next/image";
 
-export default function FollowRecommend() {
+type Props = { user: User };
+export default function FollowRecommend({ user }: Props) {
   const onFollow = () => {};
-
-  const user = {
-    id: "elonmusk",
-    nickname: "Elon Musk",
-    image: "/yRsRRjGO.jpg",
-  };
 
   return (
     <div className={style.container}>
       <div className={style.userLogoSection}>
         <div className={style.userLogo}>
-          <Image src={user.image} alt={user.id} width={40} height={40} />
+          <img src={user.image} alt={user.id} width={40} height={40} />
         </div>
       </div>
       <div className={style.userInfo}>
