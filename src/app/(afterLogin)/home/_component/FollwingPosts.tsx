@@ -1,11 +1,11 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { getFollwingPosts } from "../_lib/getFollowingPosts";
 import Post from "../../_component/Post";
 
 export default function FollwingPosts() {
-  const { data } = useQuery<Post[]>({
+  const { data } = useSuspenseQuery<Post[]>({
     queryKey: ["posts", "followings"],
     queryFn: getFollwingPosts,
     staleTime: 60 * 1000, // 1분
