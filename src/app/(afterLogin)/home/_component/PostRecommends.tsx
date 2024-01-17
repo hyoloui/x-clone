@@ -1,6 +1,5 @@
 "use client";
 
-import styles from "../home.module.css";
 import { InfiniteData, useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { getPostRecommends } from "@/app/(afterLogin)/home/_lib/getPostRecommends";
 import Post from "@/app/(afterLogin)/_component/Post";
