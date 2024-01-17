@@ -1,4 +1,5 @@
 import style from "@/app/(afterLogin)/layout.module.css";
+
 import { auth } from "@/auth";
 import Link from "next/link";
 import Image from "next/image";
@@ -46,7 +47,7 @@ export default async function AfterLoginLayout({ children, modal }: Props) {
               </>
             )}
 
-            <LogoutButton />
+            <LogoutButton session={session} />
           </div>
         </section>
       </header>

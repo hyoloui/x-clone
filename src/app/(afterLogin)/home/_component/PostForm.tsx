@@ -1,13 +1,18 @@
 "use client";
 
-import { ChangeEventHandler, FormEventHandler, useRef, useState } from "react";
 import style from "./postForm.module.css";
-import { useSession } from "next-auth/react";
+import {
+  useRef,
+  useState,
+  type ChangeEventHandler,
+  type FormEventHandler,
+} from "react";
+import type { Session } from "next-auth";
 
-export default function PostForm() {
+type Props = { session: Session | null };
+export default function PostForm({ session: me }: Props) {
   const imageRef = useRef<HTMLInputElement>(null);
   const [content, setContent] = useState("");
-  const { data: me } = useSession();
 
   const onChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     setContent(e.target.value);
