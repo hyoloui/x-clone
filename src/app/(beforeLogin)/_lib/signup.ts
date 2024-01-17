@@ -7,9 +7,12 @@ export async function onSubmit(prevState: any, formData: FormData) {
     console.log("no_id" + formData.get("id"));
     return { message: "no_id" };
   }
-  if (!formData.get("name") || !(formData.get("name") as string)?.trim()) {
-    console.log("no_name" + formData.get("name"));
-    return { message: "no_name" };
+  if (
+    !formData.get("nickname") ||
+    !(formData.get("nickname") as string)?.trim()
+  ) {
+    console.log("no_nickname" + formData.get("nickname"));
+    return { message: "no_nickname" };
   }
   if (
     !formData.get("password") ||
@@ -33,7 +36,7 @@ export async function onSubmit(prevState: any, formData: FormData) {
         credentials: "include",
       }
     );
-    console.log(response.status);
+    console.log("signup", response.status);
 
     if (response.status === 403) {
       return { message: "user_exists" };

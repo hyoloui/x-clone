@@ -51,12 +51,12 @@ export default function SignupModal() {
                 />
               </div>
               <div className={style.inputDiv}>
-                <label className={style.inputLabel} htmlFor="name">
+                <label className={style.inputLabel} htmlFor="nickname">
                   닉네임
                 </label>
                 <input
-                  id="name"
-                  name="name"
+                  id="nickname"
+                  name="nickname"
                   className={style.input}
                   required
                   type="text"
