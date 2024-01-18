@@ -8,6 +8,7 @@ import {
   type FormEventHandler,
 } from "react";
 import type { Session } from "next-auth";
+import ReactTextareaAutosize from "react-textarea-autosize";
 
 type Props = { session: Session | null };
 export default function PostForm({ session: me }: Props) {
@@ -37,7 +38,7 @@ export default function PostForm({ session: me }: Props) {
         </div>
       </div>
       <div className={style.postInputSection}>
-        <textarea
+        <ReactTextareaAutosize
           value={content}
           onChange={onChange}
           placeholder="무슨 일이 일어나고 있나요?"
