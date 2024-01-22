@@ -15,6 +15,23 @@
   border-radius: 20px;
 }
 
+.postImagePreview {
+  display: flex;
+}
+.postImagePreivewItem {
+  flex: 1;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+.postImagePreivewItem:hover {
+  opacity: 0.5;
+}
+.postImagePreivewItem img {
+  width: 100%;
+  max-height: 100px;
+  object-fit: contain;
+}
+
 .postForm {
   margin-top: 101px;
   display: flex;

@@ -14,17 +14,59 @@ type Props = { session: Session | null };
 export default function PostForm({ session: me }: Props) {
   const imageRef = useRef<HTMLInputElement>(null);
   const [content, setContent] = useState("");
+  const [preivew, setPreivew] = useState<
+    Array<{ dataUrl: string; file: File } | null>
+  >([]);
 
   const onChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     setContent(e.target.value);
   };
 
-  const onSubmit: FormEventHandler = (e) => {
+  const onSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
+    // formdata
+    const formData = new FormData();
+    formData.append("content", content);
+    preivew.forEach((p) => {
+      p && formData.append("images", p.file);
+    });
+    await fetch(`/${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
+      method: "POST",
+      credentials: "include",
+      body: formData,
+    });
   };
 
   const onClickButton = () => {
     imageRef.current?.click();
+  };
+
+  const onLoadImage: ChangeEventHandler<HTMLInputElement> = (e) => {
+    e.preventDefault();
+    const { files } = e.target;
+    if (!files) return;
+    Array.from(files).forEach((file, index) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setPreivew((prevPreview) => {
+          const prev = [...prevPreview];
+          prev[index] = {
+            dataUrl: reader.result as string,
+            file,
+          };
+          return prev;
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const onRemoveImage = (index: number) => {
+    setPreivew((prevPreview) => {
+      const prev = [...prevPreview];
+      prev.splice(index, 1);
+      return prev;
+    });
   };
 
   return (
@@ -43,6 +85,18 @@ export default function PostForm({ session: me }: Props) {
           onChange={onChange}
           placeholder="무슨 일이 일어나고 있나요?"
         />
+        <div className={style.postImagePreview}>
+          {preivew.length > 0 &&
+            preivew.map((v, index) => (
+              <div
+                className={style.postImagePreivewItem}
+                key={index}
+                onClick={() => onRemoveImage(index)}
+              >
+                <img src={v?.dataUrl} alt={`${index + 1} 번째 이미지`} />
+              </div>
+            ))}
+        </div>
         <div className={style.postButtonSection}>
           <div className={style.footerButtons}>
             <div className={style.footerButtonLeft}>
@@ -50,8 +104,10 @@ export default function PostForm({ session: me }: Props) {
                 type="file"
                 name="imageFiles"
                 multiple
+                accept="image/*"
                 hidden
                 ref={imageRef}
+                onChange={onLoadImage}
               />
               <button
                 className={style.uploadButton}
