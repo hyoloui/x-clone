@@ -9,6 +9,7 @@ import {
 } from "react";
 import type { Session } from "next-auth";
 import ReactTextareaAutosize from "react-textarea-autosize";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = { session: Session | null };
 export default function PostForm({ session: me }: Props) {
@@ -17,6 +18,7 @@ export default function PostForm({ session: me }: Props) {
   const [preivew, setPreivew] = useState<
     Array<{ dataUrl: string; file: File } | null>
   >([]);
+  const queryClient = useQueryClient();
 
   const onChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     setContent(e.target.value);
@@ -24,17 +26,46 @@ export default function PostForm({ session: me }: Props) {
 
   const onSubmit: FormEventHandler = async (e) => {
     e.preventDefault();
-    // formdata
     const formData = new FormData();
     formData.append("content", content);
     preivew.forEach((p) => {
       p && formData.append("images", p.file);
     });
-    await fetch(`/${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
-      method: "POST",
-      credentials: "include",
-      body: formData,
-    });
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`,
+        {
+          method: "POST",
+          credentials: "include",
+          body: formData,
+        }
+      );
+      if (response.ok) {
+        setContent("");
+        setPreivew([]);
+        const newPost = await response.json();
+        queryClient.setQueryData(
+          ["posts", "recommends"],
+          (prevData: { pages: Post[][] }) => {
+            const shallow = { ...prevData, pages: [...prevData.pages] };
+            shallow.pages[0] = [...shallow.pages[0]];
+            shallow.pages[0].unshift(newPost);
+            return shallow;
+          }
+        );
+        queryClient.setQueryData(
+          ["posts", "followings"],
+          (prevData: { pages: Post[][] }) => {
+            const shallow = { ...prevData, pages: [...prevData.pages] };
+            shallow.pages[0] = [...shallow.pages[0]];
+            shallow.pages[0].unshift(newPost);
+            return shallow;
+          }
+        );
+      }
+    } catch (error) {
+      alert("업로드 중 에러가 발생했습니다.");
+    }
   };
 
   const onClickButton = () => {
@@ -121,7 +152,11 @@ export default function PostForm({ session: me }: Props) {
                 </svg>
               </button>
             </div>
-            <button className={style.actionButton} disabled={!content}>
+            <button
+              type="submit"
+              className={style.actionButton}
+              disabled={!content}
+            >
               게시하기
             </button>
           </div>
