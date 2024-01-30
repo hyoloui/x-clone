@@ -4,6 +4,7 @@ export async function getTrends() {
       tags: ["trends"],
     },
     cache: "no-store",
+    credentials: "include",
   });
   console.log("getTrends", res.status);
   if (!res.ok) {
